@@ -1,0 +1,37 @@
+{
+	"name": "@krauters/typescript-core",
+	"description": "A TypeScript Repository that stands as a starting point for all other TypeScript repositories.",
+	"version": "1.0.0",
+	"main": "app.ts",
+	"type": "commonjs",
+	"scripts": {
+		"build": "ts-node ./src/app.ts",
+		"example-1": "ts-node ./example/1.ts",
+		"fix": "npm run lint -- --fix",
+		"lint": "npx eslint src/**",
+		"prepare": "husky || true",
+		"start": "nodemon --inspect -e ts -w ./src -x npm run build",
+		"test": "npm run lint && jest",
+		"upgrade:all": "npx npm-check-updates -u && npm install"
+	},
+	"keywords": [
+		"typescript",
+		"utils",
+		"utility",
+		"helper"
+	],
+	"author": "Colten Krauter <coltenkrauter>",
+	"license": "ISC",
+	"devDependencies": {
+		"@jest/globals": "^29.7.0",
+		"@krauters/eslint-config": "^0.6.0",
+		"@types/jest": "^29.5.13",
+		"husky": "^9.1.6",
+		"jest": "^29.7.0",
+		"nodemon": "^3.1.7",
+		"ts-jest": "^29.2.5",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.6.2",
+		"typescript-eslint": "^8.7.0"
+	}
+}
