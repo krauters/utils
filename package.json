@@ -1,11 +1,11 @@
 {
-	"name": "@krauters/typescript-core",
-	"description": "A TypeScript Repository that stands as a starting point for all other TypeScript repositories.",
-	"version": "1.0.0",
-	"main": "app.ts",
+	"name": "@krauters/utils",
+	"description": "A versatile TypeScript utility package packed with reusable, type-safe functions, scripts useful for all kinds of TypeScript projects, and precommit scripts to streamline your development workflow.",
+	"version": "0.3.0",
+	"main": "index.ts",
 	"type": "commonjs",
 	"scripts": {
-		"build": "ts-node ./src/app.ts",
+		"build": "ts-node ./src/index.ts",
 		"example-1": "ts-node ./example/1.ts",
 		"fix": "npm run lint -- --fix",
 		"lint": "npx eslint src/**",
