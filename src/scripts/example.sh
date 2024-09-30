@@ -24,7 +24,7 @@ log 'Running pre-commit scripts...'
 
 # Adjust the path based on whether it's run from node_modules or locally as shown
 # if ! OUTPUT=$(npx ts-node ./node_modules/@krauters/utils/src/scripts/pre-commit.ts 2>&1); then
-if ! OUTPUT=$(npx ts-node ./src/scripts/pre-commit.ts 2>&1); then
+if ! OUTPUT=$(npx ts-node ./pre-commit.ts 2>&1); then
     error "Pre-commit check failed:\n\n${OUTPUT}\n"
     error 'Aborting commit.'
     error 'Run commit with '-n' to skip pre-commit hooks.'
