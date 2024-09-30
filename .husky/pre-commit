@@ -1,0 +1,14 @@
+#!/bin/sh
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+NC='\033[0m'
+
+PREFIX="${GREEN}[HUSKY]${NC} "
+
+if ! OUTPUT=$(npx ts-node ../src/version.ts 2>&1); then
+    echo -e "${RED}${PREFIX}${OUTPUT}${NC}"
+    echo -e "${RED}${PREFIX}Aborting commit.${NC}"
+    echo -e "${RED}${PREFIX}Run commit with '-n' to skip pre-commit hooks.${NC}"
+    exit 1
+fi
