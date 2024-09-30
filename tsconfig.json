@@ -21,6 +21,8 @@
     "examples/**/*.tsx",
     "src/**/*.ts",
     "src/**/*.tsx",
+    "scripts/**/*.ts",
+    "scripts/**/*.tsx",
     "test/**/*.ts",
     "test/**/*.tsx"
   ]
