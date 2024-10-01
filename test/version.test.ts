@@ -1,148 +1,119 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-
-import { beforeEach, describe, expect, it, jest } from '@jest/globals'
 import { execSync } from 'child_process'
-import fs from 'fs'
 
-import { compareVersions } from '../src/version'
+import { PackageJson } from '../src/package-json'
+import { Version } from '../src/version'
 
 jest.mock('child_process')
-jest.mock('fs')
+jest.mock('../src/package-json')
 
-const mockedExecSync = execSync as jest.Mock
-const mockedFs = fs as jest.Mocked<typeof fs>
+const mockedExecSync = execSync as jest.MockedFunction<typeof execSync>
+const mockedFindPackageJson = PackageJson.findPackageJson as jest.MockedFunction<typeof PackageJson.findPackageJson>
 
-// eslint-disable-next-line max-lines-per-function
-describe('compareVersions', () => {
+describe('Version', () => {
 	beforeEach(() => {
-		jest.clearAllMocks()
+		jest.resetAllMocks()
 	})
 
-	it('should log when versions differ', () => {
-		// Mock Git commands for fetching the previous version and commit SHA
-		mockedExecSync.mockImplementation((...args: unknown[]) => {
-			const command = args[0] as string
-			if (command === 'git show HEAD~1:package.json') {
-				return JSON.stringify({ version: '1.0.0' })
-			}
-			if (command.startsWith('git rev-parse')) {
-				return 'abcd123'
-			}
-			throw new Error('Unexpected command')
+	describe('getCommitSha', () => {
+		it('should return the commit SHA', () => {
+			mockedExecSync.mockReturnValue('abc123\n')
+
+			const sha = Version.getCommitSha('HEAD', true)
+
+			expect(mockedExecSync).toHaveBeenCalledWith('git rev-parse --short HEAD', { encoding: 'utf8' })
+			expect(sha).toBe('abc123')
 		})
 
-		// Mock reading the local package.json
-		mockedFs.readFileSync.mockReturnValue(JSON.stringify({ version: '1.0.1' }))
-		mockedFs.existsSync.mockReturnValue(true)
+		it('should throw an error if execSync fails', () => {
+			mockedExecSync.mockImplementation(() => {
+				throw new Error('Command failed')
+			})
 
-		const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {})
-
-		compareVersions()
-
-		expect(mockedExecSync).toHaveBeenCalledWith('git show HEAD~1:package.json', { encoding: 'utf8' })
-		expect(consoleLogSpy).toHaveBeenCalledWith(
-			'Version changed from [1.0.0] (commit: abcd123) to [1.0.1] (latest local changes).',
-		)
-
-		consoleLogSpy.mockRestore()
+			expect(() => {
+				Version.getCommitSha('HEAD', true)
+			}).toThrow('Failed to get commit SHA for HEAD with error [Command failed]')
+		})
 	})
 
-	it('should throw an error when versions are the same (default behavior)', () => {
-		// Mock Git commands for fetching the previous version and commit SHA
-		mockedExecSync.mockImplementation((...args: unknown[]) => {
-			const command = args[0] as string
-			if (command === 'git show HEAD~1:package.json') {
-				return JSON.stringify({ version: '1.0.0' })
-			}
-			if (command.startsWith('git rev-parse')) {
-				return 'abcd123'
-			}
-			throw new Error('Unexpected command')
+	describe('getLocalVersion', () => {
+		it('should return the local package version', () => {
+			const packageJson = { name: 'test-package', version: '1.0.0' }
+			mockedFindPackageJson.mockReturnValue(packageJson)
+
+			const version = Version.getLocalVersion()
+
+			expect(mockedFindPackageJson).toHaveBeenCalled()
+			expect(version).toBe('1.0.0')
 		})
-
-		// Mock reading the local package.json
-		mockedFs.readFileSync.mockReturnValue(JSON.stringify({ version: '1.0.0' }))
-		mockedFs.existsSync.mockReturnValue(true)
-
-		expect(() => {
-			compareVersions()
-		}).toThrow(
-			`Version has not been changed:
-	Previous version: [1.0.0] (commit: abcd123)
-	Current version: [1.0.0] (latest local changes)
-	Please update the version before committing.`,
-		)
 	})
 
-	it('should log a warning instead of throwing an error when versions are the same if allowMatchWithoutError is true', () => {
-		// Mock Git commands for fetching the previous version and commit SHA
-		mockedExecSync.mockImplementation((...args: unknown[]) => {
-			const command = args[0] as string
-			if (command === 'git show HEAD~1:package.json') {
-				return JSON.stringify({ version: '1.0.0' })
-			}
-			if (command.startsWith('git rev-parse')) {
-				return 'abcd123'
-			}
-			throw new Error('Unexpected command')
+	describe('getVersionFromGit', () => {
+		it('should return the version from git', () => {
+			const packageJsonContent = JSON.stringify({ name: 'test-package', version: '0.9.0' })
+			mockedExecSync.mockReturnValue(packageJsonContent)
+
+			const version = Version.getVersionFromGit('HEAD~1')
+
+			expect(mockedExecSync).toHaveBeenCalledWith('git show HEAD~1:package.json', { encoding: 'utf8' })
+			expect(version).toBe('0.9.0')
 		})
 
-		// Mock reading the local package.json
-		mockedFs.readFileSync.mockReturnValue(JSON.stringify({ version: '1.0.0' }))
-		mockedFs.existsSync.mockReturnValue(true)
+		it('should throw an error if execSync fails', () => {
+			mockedExecSync.mockImplementation(() => {
+				throw new Error('Command failed')
+			})
 
-		const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {})
-
-		compareVersions(true)
-
-		expect(consoleWarnSpy).toHaveBeenCalledWith(
-			`Version has not been changed:
-	Previous version: [1.0.0] (commit: abcd123)
-	Current version: [1.0.0] (latest local changes)
-	Please update the version before committing.`,
-		)
-
-		consoleWarnSpy.mockRestore()
+			expect(() => {
+				Version.getVersionFromGit('HEAD~1')
+			}).toThrow('Failed fetching package.json from HEAD~1 with error [Command failed]')
+		})
 	})
 
-	it('should throw an error when fetching the previous package.json fails', () => {
-		mockedExecSync.mockImplementation((...args: unknown[]) => {
-			const command = args[0] as string
-			if (command === 'git show HEAD~1:package.json') {
-				throw new Error('Git command failed')
-			}
+	describe('compareVersions', () => {
+		it('should log version change if versions are different', () => {
+			const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation()
+			jest.spyOn(Version, 'getPreviousVersion').mockReturnValue('0.9.0')
+			jest.spyOn(Version, 'getLocalVersion').mockReturnValue('1.0.0')
+			jest.spyOn(Version, 'getCommitSha').mockReturnValue('abc123')
 
-			return 'abcd123'
+			Version.compareVersions()
+
+			expect(consoleLogSpy).toHaveBeenCalledWith(
+				'Version changed from [0.9.0] (commit: abc123) to [1.0.0] (latest local changes).',
+			)
+			consoleLogSpy.mockRestore()
 		})
 
-		mockedFs.readFileSync.mockReturnValue(JSON.stringify({ version: '1.0.0' }))
-		mockedFs.existsSync.mockReturnValue(true)
+		it('should throw an error if versions are the same and allowMatchWithoutError is false', () => {
+			jest.spyOn(Version, 'getPreviousVersion').mockReturnValue('1.0.0')
+			jest.spyOn(Version, 'getLocalVersion').mockReturnValue('1.0.0')
+			jest.spyOn(Version, 'getCommitSha').mockReturnValue('abc123')
 
-		expect(() => {
-			compareVersions()
-		}).toThrow('Failed fetching package.json from HEAD~1 with error [Error: Git command failed]')
-	})
-
-	it('should throw an error when reading the local package.json fails', () => {
-		mockedExecSync.mockImplementation((...args: unknown[]) => {
-			const command = args[0] as string
-			if (command === 'git show HEAD~1:package.json') {
-				return JSON.stringify({ version: '1.0.0' })
-			}
-
-			return 'abcd123'
+			expect(() => {
+				Version.compareVersions()
+			}).toThrow(
+				`Version has not been changed:
+    Previous version: [1.0.0] (commit: abc123)
+    Current version: [1.0.0] (latest local changes)
+    Please update the version before committing.`,
+			)
 		})
 
-		// Mock reading the local package.json to throw an error
-		mockedFs.readFileSync.mockImplementation(() => {
-			throw new Error('Failed to read package.json')
-		})
-		mockedFs.existsSync.mockReturnValue(true)
+		it('should warn if versions are the same and allowMatchWithoutError is true', () => {
+			const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation()
+			jest.spyOn(Version, 'getPreviousVersion').mockReturnValue('1.0.0')
+			jest.spyOn(Version, 'getLocalVersion').mockReturnValue('1.0.0')
+			jest.spyOn(Version, 'getCommitSha').mockReturnValue('abc123')
 
-		expect(() => {
-			compareVersions()
-		}).toThrow(
-			'Failed reading local package.json at /Users/coltenkrauter/Repositories/utils/package.json with error [Error: Failed to read package.json]',
-		)
+			Version.compareVersions(true)
+
+			expect(consoleWarnSpy).toHaveBeenCalledWith(
+				`Version has not been changed:
+    Previous version: [1.0.0] (commit: abc123)
+    Current version: [1.0.0] (latest local changes)
+    Please update the version before committing.`,
+			)
+			consoleWarnSpy.mockRestore()
+		})
 	})
 })

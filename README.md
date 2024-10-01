@@ -1,4 +1,8 @@
-# Utils
+<div align="center">
+
+
+</div># @krauters/utils
+
 A versatile TypeScript utility package packed with reusable, type-safe functions, scripts useful for all kinds of TypeScript projects, and precommit scripts to streamline your development workflow.
 
 ## Husky
@@ -15,8 +19,6 @@ This project uses a custom pre-commit hook to run `npm run bundle`. This ensures
 
 ```sh
 # ./husky/pre-commit
-#!/bin/sh
-
 #!/bin/sh
 
 MAIN_DIR=./node_modules/@krauters/utils/scripts/pre-commit
