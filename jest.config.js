@@ -1,16 +1,20 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 module.exports = {
-    preset: 'ts-jest',
-    testEnvironment: 'node',
-    testMatch: ['**/test/**/*.test.{ts,tsx}'],
-    collectCoverage: true,
-    coverageDirectory: 'coverage',
-    coverageThreshold: {
-      global: {
-        lines: 60,
-        statements: 60,
-        functions: 60,
-        branches: 60,
-      },
-    },
-  }
-  
+	collectCoverage: true,
+	coverageDirectory: 'coverage',
+	coverageThreshold: {
+		global: {
+			branches: 60,
+			functions: 60,
+			lines: 60,
+			statements: 60,
+		},
+	},
+	preset: 'ts-jest',
+	testEnvironment: 'node',
+	testMatch: ['**/test/**/*.test.{ts,tsx}'],
+	transform: {
+		'^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.jest.json' }],
+	},
+}
