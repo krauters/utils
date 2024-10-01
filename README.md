@@ -14,21 +14,13 @@ This project uses a custom pre-commit hook to run `npm run bundle`. This ensures
 ### Using Utils as Pre-Commit Hooks
 
 ```sh
-./husky/pre-commit
+# ./husky/pre-commit
 #!/bin/sh
 
-RED='\033[1;31m'
-GREEN='\033[1;32m'
-NC='\033[0m'
+#!/bin/sh
 
-PREFIX="${GREEN}[HUSKY]${NC} "
-
-if ! OUTPUT=$(npx ts-node ./node_modules/@krauters/utils/src/version.ts 2>&1); then
-    echo -e "${RED}${PREFIX}${OUTPUT}${NC}"
-    echo -e "${RED}${PREFIX}Aborting commit.${NC}"
-    echo -e "${RED}${PREFIX}Run commit with '-n' to skip pre-commit hooks.${NC}"
-    exit 1
-fi
+MAIN_DIR=./node_modules/@krauters/utils/scripts/pre-commit
+. $MAIN_DIR/index.sh
 
 ```
 
@@ -47,3 +39,6 @@ Thanks for spending time on this project.
 <a href="https://github.com/krauters/utils/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=krauters/utils" />
 </a>
+
+## 🔗 Other packages in the family
+We’ve got more than just this one in our toolbox – check out the rest of our `@krauters` collection on [npm/@krauters](https://www.npmjs.com/search?q=%40krauters). It’s the whole kit and caboodle you didn’t know you needed.
