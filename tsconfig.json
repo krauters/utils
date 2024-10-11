@@ -23,7 +23,8 @@
 	},
 	"include": [
 		"**/*.ts",
-		"**/*.js"
+		"**/*.js",
+		"**/*.sh"
 	],
 	"exclude": [
 		"node_modules",

@@ -1,7 +1,7 @@
 {
 	"name": "@krauters/utils",
 	"description": "A versatile TypeScript utility package packed with reusable, type-safe functions, scripts useful for all kinds of TypeScript projects, and precommit scripts to streamline your development workflow.",
-	"version": "0.5.0",
+	"version": "0.6.3",
 	"main": "dist/index.js",
 	"type": "commonjs",
 	"scripts": {
@@ -36,6 +36,7 @@
 		"typescript": "^5.6.3"
 	},
 	"files": [
-		"dist"
+		"dist",
+		"scripts"
 	]
 }
