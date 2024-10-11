@@ -1,9 +1,9 @@
 name: Node Release
-run-name: '[${{ github.ref_name }}] triggered by [${{ github.event_name }}/${{ github.actor }}]'
+run-name: Node Release [${{ github.ref_name }}] triggered by [${{ github.event_name }}/${{ github.actor }}]
 
 on:
   push:
-    branches: 'main'
+    branches: main
   workflow_dispatch:
 
 jobs:

@@ -1,4 +1,114 @@
-# Utils
+<div align="center">
+
+![Code Size](https://img.shields.io/github/languages/code-size/krauters/utils)
+![Commits per Month](https://img.shields.io/github/commit-activity/m/krauters/utils)
+![Contributors](https://img.shields.io/github/contributors/krauters/utils)
+![Forks](https://img.shields.io/github/forks/krauters/utils)
+![GitHub Stars](https://img.shields.io/github/stars/krauters/utils)
+![Install Size](https://img.shields.io/npm/npm/dw/@krauters%2Futils)
+![GitHub Issues](https://img.shields.io/github/issues/krauters/utils)
+![Last Commit](https://img.shields.io/github/last-commit/krauters/utils)
+![License](https://img.shields.io/github/license/krauters/utils)
+<a href="https://www.linkedin.com/in/coltenkrauter" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?&style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+[![npm version](https://img.shields.io/npm/v/@krauters%2Futils.svg?style=flat-square)](https://www.npmjs.org/package/@krauters/utils)
+![Open PRs](https://img.shields.io/github/issues-pr/krauters/utils)
+![Repo Size](https://img.shields.io/github/repo-size/krauters/utils)
+![Version](https://img.shields.io/github/v/release/krauters/utils)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=krauters/utils)
+
+</div><div align="center">
+
+![Code Size](https://img.shields.io/github/languages/code-size/krauters/utils)
+![Commits per Month](https://img.shields.io/github/commit-activity/m/krauters/utils)
+![Contributors](https://img.shields.io/github/contributors/krauters/utils)
+![Forks](https://img.shields.io/github/forks/krauters/utils)
+![GitHub Stars](https://img.shields.io/github/stars/krauters/utils)
+![Install Size](https://img.shields.io/npm/npm/dw/@krauters%2Futils)
+![GitHub Issues](https://img.shields.io/github/issues/krauters/utils)
+![Last Commit](https://img.shields.io/github/last-commit/krauters/utils)
+![License](https://img.shields.io/github/license/krauters/utils)
+<a href="https://www.linkedin.com/in/coltenkrauter" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?&style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+[![npm version](https://img.shields.io/npm/v/@krauters%2Futils.svg?style=flat-square)](https://www.npmjs.org/package/@krauters/utils)
+![Open PRs](https://img.shields.io/github/issues-pr/krauters/utils)
+![Repo Size](https://img.shields.io/github/repo-size/krauters/utils)
+![Version](https://img.shields.io/github/v/release/krauters/utils)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=krauters/utils)
+
+</div><div align="center">
+
+![Code Size](https://img.shields.io/github/languages/code-size/krauters/utils)
+![Commits per Month](https://img.shields.io/github/commit-activity/m/krauters/utils)
+![Contributors](https://img.shields.io/github/contributors/krauters/utils)
+![Forks](https://img.shields.io/github/forks/krauters/utils)
+![GitHub Stars](https://img.shields.io/github/stars/krauters/utils)
+![Install Size](https://img.shields.io/npm/npm/dw/@krauters%2Futils)
+![GitHub Issues](https://img.shields.io/github/issues/krauters/utils)
+![Last Commit](https://img.shields.io/github/last-commit/krauters/utils)
+![License](https://img.shields.io/github/license/krauters/utils)
+<a href="https://www.linkedin.com/in/coltenkrauter" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?&style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+[![npm version](https://img.shields.io/npm/v/@krauters%2Futils.svg?style=flat-square)](https://www.npmjs.org/package/@krauters/utils)
+![Open PRs](https://img.shields.io/github/issues-pr/krauters/utils)
+![Repo Size](https://img.shields.io/github/repo-size/krauters/utils)
+![Version](https://img.shields.io/github/v/release/krauters/utils)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=krauters/utils)
+
+</div><div align="center">
+
+![Code Size](https://img.shields.io/github/languages/code-size/krauters/utils)
+![Commits per Month](https://img.shields.io/github/commit-activity/m/krauters/utils)
+![Contributors](https://img.shields.io/github/contributors/krauters/utils)
+![Forks](https://img.shields.io/github/forks/krauters/utils)
+![GitHub Stars](https://img.shields.io/github/stars/krauters/utils)
+![Install Size](https://img.shields.io/npm/npm/dw/@krauters%2Futils)
+![GitHub Issues](https://img.shields.io/github/issues/krauters/utils)
+![Last Commit](https://img.shields.io/github/last-commit/krauters/utils)
+![License](https://img.shields.io/github/license/krauters/utils)
+<a href="https://www.linkedin.com/in/coltenkrauter" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?&style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+[![npm version](https://img.shields.io/npm/v/@krauters%2Futils.svg?style=flat-square)](https://www.npmjs.org/package/@krauters/utils)
+![Open PRs](https://img.shields.io/github/issues-pr/krauters/utils)
+![Repo Size](https://img.shields.io/github/repo-size/krauters/utils)
+![Version](https://img.shields.io/github/v/release/krauters/utils)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=krauters/utils)
+
+</div><div align="center">
+
+![Code Size](https://img.shields.io/github/languages/code-size/krauters/utils)
+![Commits per Month](https://img.shields.io/github/commit-activity/m/krauters/utils)
+![Contributors](https://img.shields.io/github/contributors/krauters/utils)
+![Forks](https://img.shields.io/github/forks/krauters/utils)
+![GitHub Stars](https://img.shields.io/github/stars/krauters/utils)
+![Install Size](https://img.shields.io/npm/npm/dw/@krauters%2Futils)
+![GitHub Issues](https://img.shields.io/github/issues/krauters/utils)
+![Last Commit](https://img.shields.io/github/last-commit/krauters/utils)
+![License](https://img.shields.io/github/license/krauters/utils)
+<a href="https://www.linkedin.com/in/coltenkrauter" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?&style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+[![npm version](https://img.shields.io/npm/v/@krauters%2Futils.svg?style=flat-square)](https://www.npmjs.org/package/@krauters/utils)
+![Open PRs](https://img.shields.io/github/issues-pr/krauters/utils)
+![Repo Size](https://img.shields.io/github/repo-size/krauters/utils)
+![Version](https://img.shields.io/github/v/release/krauters/utils)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=krauters/utils)
+
+</div><div align="center">
+
+![Code Size](https://img.shields.io/github/languages/code-size/krauters/utils)
+![Commits per Month](https://img.shields.io/github/commit-activity/m/krauters/utils)
+![Contributors](https://img.shields.io/github/contributors/krauters/utils)
+![Forks](https://img.shields.io/github/forks/krauters/utils)
+![GitHub Stars](https://img.shields.io/github/stars/krauters/utils)
+![Install Size](https://img.shields.io/npm/npm/dw/@krauters%2Futils)
+![GitHub Issues](https://img.shields.io/github/issues/krauters/utils)
+![Last Commit](https://img.shields.io/github/last-commit/krauters/utils)
+![License](https://img.shields.io/github/license/krauters/utils)
+<a href="https://www.linkedin.com/in/coltenkrauter" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?&style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+[![npm version](https://img.shields.io/npm/v/@krauters%2Futils.svg?style=flat-square)](https://www.npmjs.org/package/@krauters/utils)
+![Open PRs](https://img.shields.io/github/issues-pr/krauters/utils)
+![Repo Size](https://img.shields.io/github/repo-size/krauters/utils)
+![Version](https://img.shields.io/github/v/release/krauters/utils)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=krauters/utils)
+
+</div>
+# @krauters/utils
+
 A versatile TypeScript utility package packed with reusable, type-safe functions, scripts useful for all kinds of TypeScript projects, and precommit scripts to streamline your development workflow.
 
 ## Husky
@@ -14,21 +124,11 @@ This project uses a custom pre-commit hook to run `npm run bundle`. This ensures
 ### Using Utils as Pre-Commit Hooks
 
 ```sh
-./husky/pre-commit
+# ./husky/pre-commit
 #!/bin/sh
 
-RED='\033[1;31m'
-GREEN='\033[1;32m'
-NC='\033[0m'
-
-PREFIX="${GREEN}[HUSKY]${NC} "
-
-if ! OUTPUT=$(npx ts-node ./node_modules/@krauters/utils/src/version.ts 2>&1); then
-    echo -e "${RED}${PREFIX}${OUTPUT}${NC}"
-    echo -e "${RED}${PREFIX}Aborting commit.${NC}"
-    echo -e "${RED}${PREFIX}Run commit with '-n' to skip pre-commit hooks.${NC}"
-    exit 1
-fi
+MAIN_DIR=./node_modules/@krauters/utils/scripts/pre-commit
+. $MAIN_DIR/index.sh
 
 ```
 
@@ -47,3 +147,6 @@ Thanks for spending time on this project.
 <a href="https://github.com/krauters/utils/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=krauters/utils" />
 </a>
+
+## 🔗 Other packages in the family
+We’ve got more than just this one in our toolbox – check out the rest of our `@krauters` collection on [npm/@krauters](https://www.npmjs.com/search?q=%40krauters). It’s the whole kit and caboodle you didn’t know you needed.
