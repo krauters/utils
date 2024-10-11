@@ -1,1 +1,3 @@
+npm run build
+
 . ./scripts/pre-commit/index.sh
