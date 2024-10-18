@@ -1,9 +1,11 @@
+import { debuggable } from '@krauters/debuggable'
 import { execSync } from 'child_process'
 
 import type { PackageJsonType as PackageJsonType } from './structures'
 
 import { PackageJson } from './package-json'
 
+@debuggable()
 export class Version {
 	/**
 	 * Compares the previous and current package.json versions.
