@@ -1,3 +1,4 @@
+import { debuggable } from '@krauters/debuggable'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 
@@ -10,6 +11,7 @@ import {
 	type ValidateAndUpdateReadmeOptions,
 } from './structures'
 
+@debuggable()
 export class ReadmeValidator {
 	/**
 	 * Creates a missing section in the README content.

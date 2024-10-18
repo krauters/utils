@@ -1,8 +1,10 @@
+import { debuggable } from '@krauters/debuggable'
 import { existsSync, readFileSync } from 'fs'
 import { dirname, join } from 'path'
 
 import type { PackageJsonType as PackageJsonType } from './structures'
 
+@debuggable()
 export class PackageJson {
 	/**
 	 * Recursively searches for package.json starting from the given directory and moving up.
