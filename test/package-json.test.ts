@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import { describe, it, expect, beforeAll, afterAll } from '@jest/globals'
 
 import { PackageJson } from '../src/package-json'
 

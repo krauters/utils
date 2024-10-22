@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import { describe, beforeEach, it, expect, jest } from '@jest/globals'
 
 import type { PackageJsonType } from '../src/structures'
-
 import { ReadmeValidator } from '../src/readme-validator'
 
 jest.mock('fs')
@@ -36,7 +35,6 @@ beforeEach(() => {
 	mockWriteFileSync.mockImplementation(() => {})
 })
 
-// eslint-disable-next-line max-lines-per-function
 describe('ReadmeValidator', () => {
 	it('should throw an error if README.md does not exist', () => {
 		mockExistsSync.mockImplementation((filePath) => filePath === packageJsonPath)
