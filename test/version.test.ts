@@ -1,4 +1,5 @@
 import { execSync } from 'child_process'
+import { describe, beforeEach, it, expect, jest } from '@jest/globals'
 
 import { PackageJson } from '../src/package-json'
 import { Version } from '../src/version'
@@ -71,7 +72,7 @@ describe('Version', () => {
 
 	describe('compareVersions', () => {
 		it('should log version change if versions are different', () => {
-			const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation()
+			const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 			jest.spyOn(Version, 'getPreviousVersion').mockReturnValue('0.9.0')
 			jest.spyOn(Version, 'getLocalVersion').mockReturnValue('1.0.0')
 			jest.spyOn(Version, 'getCommitSha').mockReturnValue('abc123')
@@ -100,7 +101,7 @@ describe('Version', () => {
 		})
 
 		it('should warn if versions are the same and allowMatchWithoutError is true', () => {
-			const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation()
+			const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
 			jest.spyOn(Version, 'getPreviousVersion').mockReturnValue('1.0.0')
 			jest.spyOn(Version, 'getLocalVersion').mockReturnValue('1.0.0')
 			jest.spyOn(Version, 'getCommitSha').mockReturnValue('abc123')

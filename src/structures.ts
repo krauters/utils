@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { MakeDirectoryOptions } from 'fs'
+import type { StringifyOptions } from 'query-string'
 
 export interface PackageJsonType {
 	[key: string]: any
@@ -155,4 +157,66 @@ export interface BadgeSectionOptions {
 	linkedInUsername?: string
 	packageJson: PackageJsonType
 	repoPath?: string
+}
+
+export interface StringToArrayParsingOptions {
+	delimiter?: string
+	removeWhitespace?: boolean
+}
+
+export enum SnapType {
+	Day = 'day',
+	Hour = 'hour',
+	Minute = 'minute',
+	Month = 'month',
+	Second = 'second',
+	Week = 'week',
+	Year = 'year',
+}
+
+export interface SnapDateOptions {
+	days?: number
+	months?: number
+	snap?: SnapType
+}
+
+export enum Env {
+	Alpha = 'Alpha',
+	Beta = 'Beta',
+	Development = 'Development',
+	Gamma = 'Gamma',
+	Pipeline = 'Pipeline',
+	Production = 'Production',
+	Unknown = 'Unknown',
+}
+
+export interface Batch<T> {
+	index: number
+	items: T[]
+}
+
+export type MakeDirectoryOptionsExtended = {
+	suppressLogs?: boolean
+} & MakeDirectoryOptions
+
+export interface ReadDirectoryOptions {
+	encoding: BufferEncoding | null
+	withFileTypes?: false
+}
+
+export interface ReadJsonFileOptions {
+	encoding: BufferEncoding
+	flag?: string
+}
+
+export interface WriteJsonFileOptions {
+	encoding: BufferEncoding
+	flag?: string
+	mode?: number | string
+}
+
+export interface ToQueryParamsOptions {
+	params: Record<string, unknown>
+	stringifyOptions?: StringifyOptions
+	urlEncode?: boolean
 }
