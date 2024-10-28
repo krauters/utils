@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { MakeDirectoryOptions } from 'fs'
-import type { StringifyOptions } from 'query-string'
 
 export interface PackageJsonType {
 	[key: string]: any
@@ -216,7 +215,12 @@ export interface WriteJsonFileOptions {
 }
 
 export interface ToQueryParamsOptions {
-	params: Record<string, unknown>
-	stringifyOptions?: StringifyOptions
+	excludeKeys?: string[]
+	includeKeys?: string[]
+	params: Record<string, any>
+	sortKeys?: boolean
 	urlEncode?: boolean
+}
+export interface FromQueryParamsOptions {
+	query: string
 }
