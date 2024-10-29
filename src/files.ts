@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
 
 import { debuggable } from '@krauters/debuggable'
+import { log } from '@krauters/logger'
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs'
 
 import {
@@ -11,7 +12,7 @@ import {
 	WriteJsonFileOptions,
 } from './structures'
 
-@debuggable()
+@debuggable(log)
 export class Files {
 	/**
 	 * Creates a directory if it does not already exist, with optional parameters to override default settings.
@@ -25,13 +26,13 @@ export class Files {
 		if (!existsSync(directoryPath)) {
 			mkdirSync(directoryPath, { recursive: true, ...fsOptions })
 			if (!suppressLogs) {
-				console.debug(`Directory created at [${directoryPath}]`)
+				log.debug(`Directory created at [${directoryPath}]`)
 			}
 
 			return `created [${directoryPath}]`
 		} else {
 			if (!suppressLogs) {
-				console.debug(`Directory found at [${directoryPath}]`)
+				log.debug(`Directory found at [${directoryPath}]`)
 			}
 
 			return `found [${directoryPath}]`
@@ -80,7 +81,7 @@ export class Files {
 	): string {
 		const content = JSON.stringify(data, null, 2)
 		writeFileSync(filePath, content, options)
-		console.debug(`Data written to [${filePath}]`)
+		log.debug(`Data written to [${filePath}]`)
 
 		return `written [${filePath}]`
 	}

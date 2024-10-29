@@ -1,4 +1,5 @@
 import { debuggable } from '@krauters/debuggable'
+import { log } from '@krauters/logger'
 
 import type { Batch } from './index.ts'
 
@@ -7,7 +8,7 @@ import type { Batch } from './index.ts'
  * corresponding file in ./monkeys to keep monkey patching consistent.
  */
 
-@debuggable()
+@debuggable(log)
 export class Arrays {
 	/**
 	 * Calculates the average of an array of numbers.

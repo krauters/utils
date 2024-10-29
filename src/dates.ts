@@ -1,11 +1,12 @@
 import { debuggable } from '@krauters/debuggable'
+import { log } from '@krauters/logger'
 
 import type { SnapDateOptions } from './structures.ts'
 
 import { plural } from './strings'
 import { SnapType } from './structures'
 
-@debuggable()
+@debuggable(log)
 export class Dates {
 	static snapActions = {
 		[SnapType.Day]: (date: Date) => {

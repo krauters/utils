@@ -1,8 +1,9 @@
 import { debuggable } from '@krauters/debuggable'
+import { log } from '@krauters/logger'
 
 import { FromQueryParamsOptions, ToQueryParamsOptions } from './structures'
 
-@debuggable()
+@debuggable(log)
 export class Objects {
 	/**
 	 * Converts a query parameter string back into an object.

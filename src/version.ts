@@ -1,11 +1,12 @@
 import { debuggable } from '@krauters/debuggable'
+import { log } from '@krauters/logger'
 import { execSync } from 'child_process'
 
 import type { PackageJsonType as PackageJsonType } from './structures'
 
 import { PackageJson } from './package-json'
 
-@debuggable()
+@debuggable(log)
 export class Version {
 	/**
 	 * Compares the previous and current package.json versions.
@@ -19,7 +20,7 @@ export class Version {
 		const previousSha: string = Version.getCommitSha('HEAD~1')
 
 		if (previous !== current) {
-			console.log(
+			log.info(
 				`Version changed from [${previous}] (commit: ${previousSha}) to [${current}] (latest local changes).`,
 			)
 
@@ -35,7 +36,7 @@ export class Version {
 			throw new Error(message)
 		}
 
-		console.warn(message)
+		log.warn(message)
 	}
 
 	/**
@@ -67,7 +68,7 @@ export class Version {
 	 * @throws {Error} If package.json is not found or cannot be read.
 	 */
 	static getLocalVersion(dir: string = process.cwd()): string {
-		const packageJson: PackageJsonType = PackageJson.findPackageJson(dir)
+		const packageJson: PackageJsonType = PackageJson.getPackageJson({ startDir: dir })
 
 		return packageJson.version
 	}

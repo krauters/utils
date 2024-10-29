@@ -15,9 +15,9 @@ describe('PackageJson', () => {
 	})
 
 	const invalidPackageJsonContent = `{
-    "name": "test-package",
-    "version": "1.0.0",
-    "description": "A test package.json file",`
+		"name": "test-package",
+		"version": "1.0.0",
+		"description": "A test package.json file",`
 
 	beforeAll(() => {
 		if (!existsSync(testDir)) {
@@ -29,11 +29,11 @@ describe('PackageJson', () => {
 		rmSync(testDir, { force: true, recursive: true })
 	})
 
-	describe('readPackageJson', () => {
+	describe('loadPackageJson', () => {
 		it('should read and parse a valid package.json file', () => {
 			writeFileSync(packageJsonPath, validPackageJsonContent, 'utf8')
 
-			const packageJson = PackageJson.readPackageJson(packageJsonPath)
+			const packageJson = PackageJson.loadPackageJson(packageJsonPath)
 
 			expect(packageJson.name).toBe('test-package')
 			expect(packageJson.version).toBe('1.0.0')
@@ -44,16 +44,16 @@ describe('PackageJson', () => {
 			writeFileSync(packageJsonPath, invalidPackageJsonContent, 'utf8')
 
 			expect(() => {
-				PackageJson.readPackageJson(packageJsonPath)
+				PackageJson.loadPackageJson(packageJsonPath)
 			}).toThrow(/Failed to read package.json/)
 		})
 	})
 
-	describe('findPackageJson', () => {
+	describe('getPackageJson', () => {
 		it('should find package.json in the current directory', () => {
 			writeFileSync(packageJsonPath, validPackageJsonContent, 'utf8')
 
-			const packageJson = PackageJson.findPackageJson(testDir)
+			const packageJson = PackageJson.getPackageJson({ startDir: testDir })
 
 			expect(packageJson.name).toBe('test-package')
 		})
@@ -62,7 +62,7 @@ describe('PackageJson', () => {
 			const nestedDir = join(testDir, 'nested')
 			mkdirSync(nestedDir)
 
-			const packageJson = PackageJson.findPackageJson(nestedDir)
+			const packageJson = PackageJson.getPackageJson({ startDir: nestedDir })
 
 			expect(packageJson.name).toBe('test-package')
 		})
@@ -71,17 +71,17 @@ describe('PackageJson', () => {
 			rmSync(packageJsonPath)
 
 			expect(() => {
-				PackageJson.findPackageJson('/test-root-dir')
-			}).toThrow('No package.json found in this project hierarchy.')
+				PackageJson.getPackageJson({ startDir: '/test-root-dir' })
+			}).toThrow('No package.json found within the specified directory depth.')
 		})
 	})
 
-	describe('packageNameToTitle', () => {
+	describe('formatPackageName', () => {
 		it('should convert package name to title without scope', () => {
 			const packageName = 'test-package-name'
 			const regex = /^@.*\//
 
-			const title = PackageJson.packageNameToTitle(packageName, regex)
+			const title = PackageJson.formatPackageName(packageName, { scopeRegex: regex })
 
 			expect(title).toBe('Test Package Name')
 		})
@@ -90,7 +90,7 @@ describe('PackageJson', () => {
 			const packageName = '@scope/test-package-name'
 			const regex = /^@.*\//
 
-			const title = PackageJson.packageNameToTitle(packageName, regex)
+			const title = PackageJson.formatPackageName(packageName, { scopeRegex: regex })
 
 			expect(title).toBe('Test Package Name')
 		})

@@ -1,7 +1,7 @@
 {
 	"name": "@krauters/utils",
 	"description": "A versatile TypeScript utility package packed with reusable, type-safe functions, scripts useful for all kinds of TypeScript projects, and precommit scripts to streamline your development workflow.",
-	"version": "0.8.0",
+	"version": "0.9.0",
 	"main": "dist/src/index.js",
 	"type": "commonjs",
 	"scripts": {
@@ -17,12 +17,20 @@
 		"upgrade:all": "npx npm-check-updates --upgrade && npm install"
 	},
 	"keywords": [
+		"helper",
 		"typescript",
-		"utils",
 		"utility",
-		"helper"
+		"utils"
 	],
 	"author": "Colten Krauter <coltenkrauter>",
+	"bugs": {
+		"url": "https://github.com/krauters/utils/issues/new?title=%5BBUG%5D+Brief+Description&template=bug_report.md"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/krauters/utils.git"
+	},
+	"homepage": "https://buymeacoffee.com/coltenkrauter",
 	"license": "ISC",
 	"devDependencies": {
 		"@jest/globals": "^29.7.0",
@@ -40,7 +48,8 @@
 		"scripts"
 	],
 	"dependencies": {
-		"@krauters/debuggable": "^0.1.1",
+		"@krauters/debuggable": "^0.2.0",
+		"@krauters/logger": "^0.1.0",
 		"@krauters/monkey-patcher": "^0.1.0"
 	}
 }

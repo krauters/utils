@@ -1,3 +1,4 @@
+import { log } from '@krauters/logger'
 import { execSync } from 'child_process'
 
 import { type BadgeSectionOptions, BadgeType, BadgeURL, type PackageJsonType, type Section } from './structures'
@@ -9,7 +10,7 @@ import { type BadgeSectionOptions, BadgeType, BadgeURL, type PackageJsonType, ty
  * @returns An array of custom sections.
  */
 export function getCustomSections(packageJson: PackageJsonType): Section[] {
-	console.log(`Generating custom sections using package.json data for [${packageJson.name}]...`)
+	log.info(`Generating custom sections using package.json data for [${packageJson.name}]...`)
 
 	return [
 		{
@@ -51,7 +52,7 @@ export function getRepoPathFromGit(): string | undefined {
 
 		return match ? match[1] : undefined
 	} catch (error: unknown) {
-		console.warn(`Warning: Could not determine Git repository information [${error}].`)
+		log.warn(`Warning: Could not determine Git repository information [${error}].`)
 
 		return undefined
 	}
@@ -69,7 +70,7 @@ export function getBadgeSection(options: BadgeSectionOptions): string {
 	const packageName = name.startsWith('@') ? name.replace('/', '%2F') : name
 
 	if (!repoPath && badgeTypes.some((badge) => badge !== BadgeType.LinkedIn)) {
-		console.warn(
+		log.warn(
 			`Warning: One or more badges are enabled but 'repoPath' is not supplied. Badge URLs may not be generated correctly.`,
 		)
 	}
