@@ -72,7 +72,7 @@ describe('PackageJson', () => {
 
 			expect(() => {
 				PackageJson.getPackageJson({ startDir: '/test-root-dir' })
-			}).toThrow('No package.json found within the specified directory depth.')
+			}).toThrow('No package.json found during directory traversal of dirs [/test-root-dir, /].')
 		})
 	})
 
