@@ -59,5 +59,6 @@ Thanks for spending time on this project.
   <img src="https://contrib.rocks/image?repo=krauters/utils" />
 </a>
 
-## 🔗 Other packages in the family
-We’ve got more than just this one in our toolbox – check out the rest of our `@krauters` collection on [npm/@krauters](https://www.npmjs.com/search?q=%40krauters). It’s the whole kit and caboodle you didn’t know you needed.
+<br />
+<br />
+<a href="https://www.buymeacoffee.com/coltenkrauter"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=coltenkrauter&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>

@@ -2,10 +2,10 @@
 
 import { debuggable } from '@krauters/debuggable'
 import { log } from '@krauters/logger'
+import { FileEncoding } from '@krauters/structures'
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs'
 
 import {
-	FileEncoding,
 	MakeDirectoryOptionsExtended,
 	ReadDirectoryOptions,
 	ReadJsonFileOptions,

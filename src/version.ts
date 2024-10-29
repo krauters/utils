@@ -1,8 +1,8 @@
+import type { PackageJson as PackageJsonType } from '@krauters/structures'
+
 import { debuggable } from '@krauters/debuggable'
 import { log } from '@krauters/logger'
 import { execSync } from 'child_process'
-
-import type { PackageJsonType as PackageJsonType } from './structures'
 
 import { PackageJson } from './package-json'
 
@@ -70,6 +70,7 @@ export class Version {
 	static getLocalVersion(dir: string = process.cwd()): string {
 		const packageJson: PackageJsonType = PackageJson.getPackageJson({ startDir: dir })
 
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return packageJson.version
 	}
 
@@ -94,6 +95,7 @@ export class Version {
 			const packageJsonContent: string = execSync(`git show ${ref}:package.json`, { encoding: 'utf8' })
 			const data: PackageJsonType = JSON.parse(packageJsonContent)
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			return data.version
 		} catch (error: unknown) {
 			if (error instanceof Error) {

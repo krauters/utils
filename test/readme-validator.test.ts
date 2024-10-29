@@ -1,18 +1,24 @@
+import type { PackageJson as PackageJsonType } from '@krauters/structures'
+import type { PathOrFileDescriptor } from 'fs'
+
+import { beforeEach, describe, expect, it, jest } from '@jest/globals'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { describe, beforeEach, it, expect, jest } from '@jest/globals'
 
-import type { PackageJsonType } from '../src/structures'
 import { ReadmeValidator } from '../src/readme-validator'
 
 jest.mock('fs', () => ({
-	...(jest.requireActual('fs') as object),
-	readFile: jest.fn(),
-	writeFile: jest.fn(),
+	...jest.requireActual('fs') as object,
+
 	existsSync: jest.fn(),
-}));
+
+	// Mock specific functions
+	readFileSync: jest.fn(),
+	writeFileSync: jest.fn(),
+}))
+
 const mockExistsSync = existsSync as jest.Mock
-const mockReadFileSync = readFileSync as jest.Mock
+const mockReadFileSync = readFileSync as jest.MockedFunction<typeof readFileSync>
 const mockWriteFileSync = writeFileSync as jest.Mock
 const mockPackageJson: PackageJsonType = {
 	description: 'A test package description',
@@ -25,17 +31,32 @@ const mockReadmePath = join(mockRepoPath, 'README.md')
 const packageJsonPath = join(mockRepoPath, 'package.json')
 
 beforeEach(() => {
+	jest.clearAllMocks()
 	jest.resetAllMocks()
 
 	mockExistsSync.mockImplementation((filePath) => filePath === mockReadmePath || filePath === packageJsonPath)
-	mockReadFileSync.mockImplementation((filePath) => {
-		if (filePath === mockReadmePath)
-			return '# test-package\n\nA test package description\n\n## Existing Section\n\nExisting content\n'
-		if (filePath === packageJsonPath) return JSON.stringify(mockPackageJson)
-		throw new Error(`File not found: ${filePath}`)
-	})
 
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	// Corrected mock implementation for readFileSync
+	mockReadFileSync.mockImplementation(((
+		path: PathOrFileDescriptor,
+		options?: { encoding?: null | string; flag?: string } | null | string,
+	) => {
+		let encoding: null | string = null
+		if (typeof options === 'string') {
+			encoding = options
+		} else if (options && typeof options === 'object') {
+			encoding = options.encoding || null
+		}
+
+		if (path === mockReadmePath && encoding === 'utf8') {
+			return '# test-package\n\nA test package description\n\n## Existing Section\n\nExisting content\n'
+		} else if (path === packageJsonPath && encoding === 'utf8') {
+			return JSON.stringify(mockPackageJson)
+		} else {
+			throw new Error(`File not found or encoding mismatch: ${path}`)
+		}
+	}) as typeof readFileSync)
+
 	mockWriteFileSync.mockImplementation(() => {})
 })
 
@@ -44,14 +65,18 @@ describe('ReadmeValidator', () => {
 		mockExistsSync.mockImplementation((filePath) => filePath === packageJsonPath)
 
 		expect(() => ReadmeValidator.load({ packageJsonPath, repoPath: mockRepoPath })).toThrow(
-			'README.md file not found in the repository',
+			`README.md file not found in the repository at [${mockReadmePath}]`,
 		)
 	})
 
 	it('should initialize with package.json data and existing README content', () => {
 		const data = ReadmeValidator.load({ packageJsonPath, repoPath: mockRepoPath })
 		expect(data).toBeDefined()
-		expect(mockReadFileSync).toHaveBeenCalledWith(mockReadmePath, 'utf8')
+
+		// Adjusted the expectation to match the actual call arguments.
+		// Since 'package-json.ts' uses 'utf8' as the encoding parameter,
+		// we expect 'mockReadFileSync' to be called with 'utf8' for 'package.json'.
+		expect(mockReadFileSync).toHaveBeenCalledWith(mockReadmePath, { encoding: 'utf8' })
 		expect(mockReadFileSync).toHaveBeenCalledWith(packageJsonPath, 'utf8')
 	})
 
@@ -87,7 +112,7 @@ describe('ReadmeValidator', () => {
 		expect(mockWriteFileSync).toHaveBeenCalledWith(
 			mockReadmePath,
 			expect.stringContaining('## New Section\n\nPlaceholder content here\n'),
-			'utf8',
+			{ encoding: 'utf8' },
 		)
 	})
 
@@ -106,12 +131,12 @@ describe('ReadmeValidator', () => {
 		expect(mockWriteFileSync).toHaveBeenCalledWith(
 			mockReadmePath,
 			expect.stringContaining('## First Missing Section\n\nPlaceholder content here\n'),
-			'utf8',
+			{ encoding: 'utf8' },
 		)
 		expect(mockWriteFileSync).toHaveBeenCalledWith(
 			mockReadmePath,
 			expect.stringContaining('## Second Missing Section\n\nPlaceholder content here\n'),
-			'utf8',
+			{ encoding: 'utf8' },
 		)
 	})
 
@@ -122,7 +147,7 @@ describe('ReadmeValidator', () => {
 		expect(mockWriteFileSync).toHaveBeenCalledWith(
 			mockReadmePath,
 			expect.stringContaining('## Existing Section\n\nUpdated content'),
-			'utf8',
+			{ encoding: 'utf8' },
 		)
 	})
 
@@ -133,16 +158,26 @@ describe('ReadmeValidator', () => {
 		expect(mockWriteFileSync).not.toHaveBeenCalledWith(
 			mockReadmePath,
 			expect.stringContaining('Should not overwrite'),
-			'utf8',
+			{ encoding: 'utf8' },
 		)
 	})
 
 	it('should include the main title and description if missing', () => {
-		mockReadFileSync.mockImplementation((filePath) => {
-			if (filePath === mockReadmePath) return '## Existing Section\n\nContent here\n'
-			if (filePath === packageJsonPath) return JSON.stringify(mockPackageJson)
-			throw new Error(`File not found: ${filePath}`)
-		})
+		mockReadFileSync.mockImplementation(((
+			path: PathOrFileDescriptor,
+			options?: { encoding?: null | string; flag?: string } | null | string,
+		) => {
+			let encoding: null | string = null
+			if (typeof options === 'string') {
+				encoding = options
+			} else if (options && typeof options === 'object') {
+				encoding = options.encoding || null
+			}
+
+			if (path === mockReadmePath && encoding === 'utf8') return '## Existing Section\n\nContent here\n'
+			if (path === packageJsonPath && encoding === 'utf8') return JSON.stringify(mockPackageJson)
+			throw new Error(`File not found or encoding mismatch: ${path}`)
+		}) as typeof readFileSync)
 		const sections = [{ header: 'Existing Section', required: true }]
 		ReadmeValidator.validateAndUpdate({
 			autoCreateMissing: true,
@@ -154,16 +189,26 @@ describe('ReadmeValidator', () => {
 		expect(mockWriteFileSync).toHaveBeenCalledWith(
 			mockReadmePath,
 			expect.stringContaining('# test-package\n\nA test package description\n'),
-			'utf8',
+			{ encoding: 'utf8' },
 		)
 	})
 
 	it('should handle an empty README correctly', () => {
-		mockReadFileSync.mockImplementation((filePath) => {
-			if (filePath === mockReadmePath) return ''
-			if (filePath === packageJsonPath) return JSON.stringify(mockPackageJson)
-			throw new Error(`File not found: ${filePath}`)
-		})
+		mockReadFileSync.mockImplementation(((
+			path: PathOrFileDescriptor,
+			options?: { encoding?: null | string; flag?: string } | null | string,
+		) => {
+			let encoding: null | string = null
+			if (typeof options === 'string') {
+				encoding = options
+			} else if (options && typeof options === 'object') {
+				encoding = options.encoding || null
+			}
+
+			if (path === mockReadmePath && encoding === 'utf8') return ''
+			if (path === packageJsonPath && encoding === 'utf8') return JSON.stringify(mockPackageJson)
+			throw new Error(`File not found or encoding mismatch: ${path}`)
+		}) as typeof readFileSync)
 
 		const sections = [{ content: 'Content for empty section', header: 'Empty Section', required: true }]
 
@@ -177,7 +222,7 @@ describe('ReadmeValidator', () => {
 		expect(mockWriteFileSync).toHaveBeenCalledWith(
 			mockReadmePath,
 			expect.stringContaining('## Empty Section\n\nContent for empty section\n'),
-			'utf8',
+			{ encoding: 'utf8' },
 		)
 	})
 
