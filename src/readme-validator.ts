@@ -1,16 +1,12 @@
 import { debuggable } from '@krauters/debuggable'
 import { log } from '@krauters/logger'
+import { FileEncoding, PackageJson as PackageJsonType } from '@krauters/structures'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 
+import type { ParsedReadme, Section, ValidateAndUpdateReadmeOptions } from './structures'
+
 import { PackageJson } from './package-json'
-import {
-	FileEncoding,
-	type PackageJsonType,
-	type ParsedReadme,
-	type Section,
-	type ValidateAndUpdateReadmeOptions,
-} from './structures'
 
 @debuggable(log)
 export class ReadmeValidator {
@@ -47,7 +43,7 @@ export class ReadmeValidator {
 			throw new Error(`README.md file not found in the repository at [${path}]`)
 		}
 
-		const content = readFileSync(path, FileEncoding.UTF8)
+		const content = readFileSync(path, { encoding: FileEncoding.UTF8 })
 		log.info(`Successfully loaded README.md`)
 
 		return { content, packageJson, path }
@@ -61,7 +57,7 @@ export class ReadmeValidator {
 	 */
 	public static save(path: string, content: string) {
 		log.info(`Saving README.md to [${path}]...`)
-		writeFileSync(path, content, FileEncoding.UTF8)
+		writeFileSync(path, content, { encoding: FileEncoding.UTF8 })
 		log.info(`Successfully saved README.md`)
 	}
 
@@ -157,7 +153,7 @@ export class ReadmeValidator {
 		validateOnly = false,
 	): string {
 		const expectedTitle = `# ${packageJson.name}`
-		const expectedDescription = packageJson.description ?? ''
+		const expectedDescription: string = packageJson.description ?? ''
 
 		const titleExists = readmeContent.includes(expectedTitle)
 		const descriptionExists = expectedDescription === '' || readmeContent.includes(expectedDescription)

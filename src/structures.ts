@@ -1,85 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import type { PackageJson } from '@krauters/structures'
 import type { MakeDirectoryOptions } from 'fs'
-
-export interface PackageJsonType {
-	[key: string]: any
-	author?: Person | string
-	bin?: Bin | string
-	browser?: Browser | string
-	bugs?: Bugs | string
-	bundledDependencies?: string[]
-	config?: Record<string, any>
-	contributors?: Person[] | string[]
-	cpu?: string[]
-	dependencies?: Dependencies
-	description?: string
-	devDependencies?: Dependencies
-	directories?: Directories
-	engines?: Engines
-	files?: string[]
-	homepage?: string
-	keywords?: string[]
-	license?: string
-	main?: string
-	man?: string | string[]
-	module?: string
-	name: string
-	optionalDependencies?: Dependencies
-	os?: string[]
-	peerDependencies?: Dependencies
-	private?: boolean
-	publishConfig?: PublishConfig
-	repository?: Repository | string
-	scripts?: Scripts
-	type?: 'commonjs' | 'module'
-	types?: string
-	version: string
-}
-
-interface Bugs {
-	email?: string
-	url?: string
-}
-
-interface Person {
-	email?: string
-	name?: string
-	url?: string
-}
-
-interface Repository {
-	type: string
-	url: string
-}
-
-type Scripts = Record<string, string>
-
-type Dependencies = Record<string, string>
-
-type Browser = Record<string, string>
-
-type Bin = Record<string, string>
-
-interface Directories {
-	bin?: string
-	doc?: string
-	example?: string
-	lib?: string
-	man?: string
-}
-
-interface Engines {
-	[engine: string]: string | undefined
-	node?: string
-	npm?: string
-	yarn?: string
-}
-
-interface PublishConfig {
-	[key: string]: any
-	access?: 'public' | 'restricted'
-	registry?: string
-}
 
 export interface Section {
 	content?: string
@@ -111,10 +33,6 @@ export interface ParsedReadme {
 	description: string
 	sections: Section[]
 	title: string
-}
-
-export enum FileEncoding {
-	UTF8 = 'utf8',
 }
 
 export interface ValidateAndUpdateReadmeOptions {
@@ -154,7 +72,7 @@ export enum BadgeType {
 export interface BadgeSectionOptions {
 	badgeTypes: BadgeType[]
 	linkedInUsername?: string
-	packageJson: PackageJsonType
+	packageJson: PackageJson
 	repoPath?: string
 }
 
@@ -177,16 +95,6 @@ export interface SnapDateOptions {
 	days?: number
 	months?: number
 	snap?: SnapType
-}
-
-export enum Env {
-	Alpha = 'Alpha',
-	Beta = 'Beta',
-	Development = 'Development',
-	Gamma = 'Gamma',
-	Pipeline = 'Pipeline',
-	Production = 'Production',
-	Unknown = 'Unknown',
 }
 
 export interface Batch<T> {

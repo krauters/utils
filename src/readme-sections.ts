@@ -1,7 +1,9 @@
+import type { PackageJson as PackageJsonType } from '@krauters/structures'
+
 import { log } from '@krauters/logger'
 import { execSync } from 'child_process'
 
-import { type BadgeSectionOptions, BadgeType, BadgeURL, type PackageJsonType, type Section } from './structures'
+import { type BadgeSectionOptions, BadgeType, BadgeURL, type Section } from './structures'
 
 /**
  * Provides custom sections to be added to the README, incorporating data from `packageJson`.

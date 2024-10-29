@@ -1,9 +1,8 @@
 import { debuggable } from '@krauters/debuggable'
 import { log } from '@krauters/logger'
+import { PackageJson as PackageJsonType } from '@krauters/structures'
 import { existsSync, readFileSync } from 'fs'
 import { dirname, join } from 'path'
-
-import type { PackageJsonType as PackageJsonType } from './structures'
 
 interface PackageJsonOptions {
 	maxDepth?: number
