@@ -1,4 +1,5 @@
 import { debuggable } from '@krauters/debuggable'
+import { log } from '@krauters/logger'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 
@@ -11,7 +12,7 @@ import {
 	type ValidateAndUpdateReadmeOptions,
 } from './structures'
 
-@debuggable()
+@debuggable(log)
 export class ReadmeValidator {
 	/**
 	 * Creates a missing section in the README content.
@@ -25,7 +26,7 @@ export class ReadmeValidator {
 		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 		const sectionContent = content || placeholder || 'Placeholder content here'
 
-		console.log(`Creating section [${header}]...`)
+		log.info(`Creating section [${header}]...`)
 
 		return `${readmeContent}\n## ${header}\n\n${sectionContent}\n`
 	}
@@ -38,16 +39,16 @@ export class ReadmeValidator {
 	 * @throws {Error} - Throws an error if the README.md file does not exist.
 	 */
 	public static load({ packageJsonPath, repoPath = '' }: Partial<ValidateAndUpdateReadmeOptions>) {
-		const packageJson = PackageJson.findPackageJson(packageJsonPath)
+		const packageJson = PackageJson.getPackageJson({ startDir: packageJsonPath })
 		const path = join(repoPath, 'README.md')
 
-		console.log(`Loading README.md from [${path}]...`)
+		log.info(`Loading README.md from [${path}]...`)
 		if (!existsSync(path)) {
 			throw new Error(`README.md file not found in the repository at [${path}]`)
 		}
 
 		const content = readFileSync(path, FileEncoding.UTF8)
-		console.log(`Successfully loaded README.md`)
+		log.info(`Successfully loaded README.md`)
 
 		return { content, packageJson, path }
 	}
@@ -59,9 +60,9 @@ export class ReadmeValidator {
 	 * @param content - The content to be written to the README file.
 	 */
 	public static save(path: string, content: string) {
-		console.log(`Saving README.md to [${path}]...`)
+		log.info(`Saving README.md to [${path}]...`)
 		writeFileSync(path, content, FileEncoding.UTF8)
-		console.log(`Successfully saved README.md`)
+		log.info(`Successfully saved README.md`)
 	}
 
 	/**
@@ -76,7 +77,7 @@ export class ReadmeValidator {
 		const updatedContent = `## ${header}\n\n${content}`
 		const sectionRegex = new RegExp(`## ${header}\\n[\\s\\S]*?(?=## |$)`, 'i')
 
-		console.log(`Updating section [${header}]...`)
+		log.info(`Updating section [${header}]...`)
 
 		return readmeContent.replace(sectionRegex, updatedContent)
 	}
@@ -113,10 +114,10 @@ export class ReadmeValidator {
 
 		if (validateOnly) {
 			ReadmeValidator.validateSections(readmeContent, sections)
-			console.log('README.md has been successfully validated.')
+			log.info('README.md has been successfully validated.')
 		} else {
 			ReadmeValidator.save(path, readmeContent)
-			console.log('README.md has been successfully validated and updated.')
+			log.info('README.md has been successfully validated and updated.')
 		}
 
 		return {
@@ -168,18 +169,18 @@ export class ReadmeValidator {
 						`Expected Title [${expectedTitle}]\nExpected Description [${expectedDescription}]`,
 				)
 			}
-			console.log(`Main title and description validated successfully for [${packageJson.name}].`)
+			log.info(`Main title and description validated successfully for [${packageJson.name}].`)
 
 			return readmeContent
 		}
 
 		if (!titleExists) {
-			console.log(`Adding main title and description for [${packageJson.name}]...`)
+			log.info(`Adding main title and description for [${packageJson.name}]...`)
 
 			return `${expectedTitle}\n\n${expectedDescription}\n\n${readmeContent}`
 		}
 
-		console.log(`Main title already exists for [${packageJson.name}]`)
+		log.info(`Main title already exists for [${packageJson.name}]`)
 
 		return readmeContent
 	}

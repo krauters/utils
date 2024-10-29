@@ -1,8 +1,9 @@
 import { debuggable } from '@krauters/debuggable'
+import { log } from '@krauters/logger'
 
 import type { StringToArrayParsingOptions } from './structures.ts'
 
-@debuggable()
+@debuggable(log)
 export class Strings {
 	/**
 	 * Converts a string to camelCase.

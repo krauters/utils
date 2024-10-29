@@ -5,8 +5,12 @@ import { describe, beforeEach, it, expect, jest } from '@jest/globals'
 import type { PackageJsonType } from '../src/structures'
 import { ReadmeValidator } from '../src/readme-validator'
 
-jest.mock('fs')
-
+jest.mock('fs', () => ({
+	...(jest.requireActual('fs') as object),
+	readFile: jest.fn(),
+	writeFile: jest.fn(),
+	existsSync: jest.fn(),
+}));
 const mockExistsSync = existsSync as jest.Mock
 const mockReadFileSync = readFileSync as jest.Mock
 const mockWriteFileSync = writeFileSync as jest.Mock

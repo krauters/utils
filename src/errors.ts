@@ -1,9 +1,10 @@
 /* eslint-disable max-classes-per-file */
 
 import { debuggable } from '@krauters/debuggable'
+import { log } from '@krauters/logger'
 import { arch, userInfo, UserInfo } from 'os'
 
-@debuggable()
+@debuggable(log)
 export class CustomError extends Error {
 	public architecture: string
 	public currentWorkingDirectory: string
@@ -34,7 +35,7 @@ export class CustomError extends Error {
 		this.processId = process.pid
 		this.userInfo = userInfo()
 
-		console.error(message, { ...details, errorType: this.name })
+		log.error(message, { ...details, errorType: this.name })
 	}
 
 	/**

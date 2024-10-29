@@ -1,8 +1,9 @@
 import { debuggable } from '@krauters/debuggable'
+import { log } from '@krauters/logger'
 
 import { TimeoutError } from './index'
 
-@debuggable()
+@debuggable(log)
 export class Promises {
 	/**
 	 * Sleep function that returns a promise that resolves after the given seconds have passed.
