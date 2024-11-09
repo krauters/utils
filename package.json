@@ -1,7 +1,7 @@
 {
 	"name": "@krauters/utils",
 	"description": "A versatile TypeScript utility package packed with reusable, type-safe functions, scripts useful for all kinds of TypeScript projects, and precommit scripts to streamline your development workflow.",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"main": "dist/src/index.js",
 	"type": "commonjs",
 	"scripts": {
@@ -48,9 +48,9 @@
 		"scripts"
 	],
 	"dependencies": {
-		"@krauters/debuggable": "^0.3.0",
+		"@krauters/debuggable": "^0.4.0",
 		"@krauters/logger": "^0.3.2",
-		"@krauters/monkey-patcher": "^0.1.0",
+		"@krauters/monkey-patcher": "^0.3.0",
 		"@krauters/structures": "^1.0.2"
 	}
 }
