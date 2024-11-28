@@ -1,7 +1,9 @@
 import { describe, expect, it } from '@jest/globals'
-import { Dates } from './../src/dates'
+
+import { Dates } from '../src/dates'
 import { SnapType } from '../src/structures'
 
+// eslint-disable-next-line max-lines-per-function
 describe('Dates', () => {
 	describe('getWeekStart', () => {
 		it('should return the same day if it is Sunday', () => {

@@ -65,10 +65,27 @@ export class Strings {
 	 * Converts a string to kebab-case.
 	 *
 	 * @param text The string to convert.
+	 * @param splitCase Optional. Whether to split PascalCase or camelCase, as well as numbers. Defaults to false.
 	 * @returns The kebab-case string.
 	 */
-	static kebabCase(text: string): string {
-		return text.toLowerCase().split(/\s+/).join('-')
+	static kebabCase(text: string, splitCase = false): string {
+		text = text.trim()
+
+		// Handle PascalCase or camelCase splitting if enabled
+		if (splitCase) {
+			text = text.replace(/([a-z])([A-Z])/g, '$1 $2')
+
+			// Split letters and numbers only if splitCase is true
+			text = text.replace(/([a-zA-Z])([0-9])/g, '$1 $2').replace(/([0-9])([a-zA-Z])/g, '$1 $2')
+		}
+
+		// Replace invalid characters with spaces, normalize whitespace to dashes
+		text = text.replace(/[^a-zA-Z0-9\s-]/g, ' ').replace(/\s+/g, '-')
+
+		// Remove leading and trailing dashes, and normalize consecutive dashes
+		text = text.replace(/^-+|-+$/g, '').replace(/-{2,}/g, '-')
+
+		return text.toLowerCase()
 	}
 
 	/**

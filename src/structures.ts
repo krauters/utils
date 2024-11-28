@@ -3,54 +3,6 @@
 import type { PackageJson } from '@krauters/structures'
 import type { MakeDirectoryOptions } from 'fs'
 
-export interface Section {
-	content?: string
-	header: string
-	placeholder?: string
-	required: boolean
-}
-
-export interface ReadmeParserOptions {
-	autoCreateMissing?: boolean
-	updateContent?: boolean
-	validateOnly?: boolean
-}
-
-export interface ParsedReadme {
-	description: string
-	sections: Section[]
-	title: string
-}
-
-export interface Section {
-	content?: string
-	header: string
-	placeholder?: string
-	required: boolean
-}
-
-export interface ParsedReadme {
-	description: string
-	sections: Section[]
-	title: string
-}
-
-export interface ValidateAndUpdateReadmeOptions {
-	autoCreateMissing?: boolean
-	badgeSection?: string
-	packageJsonPath?: string
-	repoPath?: string
-	sections?: Section[]
-	updateContent?: boolean
-	validateOnly?: boolean
-}
-
-export enum BadgeURL {
-	LinkedIn = 'https://www.linkedin.com/in/',
-	Shields = 'https://img.shields.io/',
-	Visitors = 'https://visitor-badge.laobi.icu/badge?page_id=',
-}
-
 export enum BadgeType {
 	CodeSize = 'languages/code-size',
 	CommitsPerMonth = 'commit-activity/m',
@@ -69,16 +21,10 @@ export enum BadgeType {
 	Visitors = 'visitors',
 }
 
-export interface BadgeSectionOptions {
-	badgeTypes: BadgeType[]
-	linkedInUsername?: string
-	packageJson: PackageJson
-	repoPath?: string
-}
-
-export interface StringToArrayParsingOptions {
-	delimiter?: string
-	removeWhitespace?: boolean
+export enum BadgeURL {
+	LinkedIn = 'https://www.linkedin.com/in/',
+	Shields = 'https://img.shields.io/',
+	Visitors = 'https://visitor-badge.laobi.icu/badge?page_id=',
 }
 
 export enum SnapType {
@@ -91,10 +37,11 @@ export enum SnapType {
 	Year = 'year',
 }
 
-export interface SnapDateOptions {
-	days?: number
-	months?: number
-	snap?: SnapType
+export interface BadgeSectionOptions {
+	badgeTypes: BadgeType[]
+	linkedInUsername?: string
+	packageJson: PackageJson
+	repoPath?: string
 }
 
 export interface Batch<T> {
@@ -102,9 +49,25 @@ export interface Batch<T> {
 	items: T[]
 }
 
+export interface FromQueryParamsOptions {
+	query: string
+}
+
 export type MakeDirectoryOptionsExtended = {
 	suppressLogs?: boolean
 } & MakeDirectoryOptions
+
+export interface ParsedReadme {
+	description: string
+	sections: Section[]
+	title: string
+}
+
+export interface ParsedReadme {
+	description: string
+	sections: Section[]
+	title: string
+}
 
 export interface ReadDirectoryOptions {
 	encoding: BufferEncoding | null
@@ -116,10 +79,35 @@ export interface ReadJsonFileOptions {
 	flag?: string
 }
 
-export interface WriteJsonFileOptions {
-	encoding: BufferEncoding
-	flag?: string
-	mode?: number | string
+export interface ReadmeParserOptions {
+	autoCreateMissing?: boolean
+	updateContent?: boolean
+	validateOnly?: boolean
+}
+
+export interface Section {
+	content?: string
+	header: string
+	placeholder?: string
+	required: boolean
+}
+
+export interface Section {
+	content?: string
+	header: string
+	placeholder?: string
+	required: boolean
+}
+
+export interface SnapDateOptions {
+	days?: number
+	months?: number
+	snap?: SnapType
+}
+
+export interface StringToArrayParsingOptions {
+	delimiter?: string
+	removeWhitespace?: boolean
 }
 
 export interface ToQueryParamsOptions {
@@ -129,6 +117,18 @@ export interface ToQueryParamsOptions {
 	sortKeys?: boolean
 	urlEncode?: boolean
 }
-export interface FromQueryParamsOptions {
-	query: string
+
+export interface ValidateAndUpdateReadmeOptions {
+	autoCreateMissing?: boolean
+	badgeSection?: string
+	packageJsonPath?: string
+	repoPath?: string
+	sections?: Section[]
+	updateContent?: boolean
+	validateOnly?: boolean
+}
+export interface WriteJsonFileOptions {
+	encoding: BufferEncoding
+	flag?: string
+	mode?: number | string
 }

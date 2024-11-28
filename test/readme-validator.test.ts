@@ -7,8 +7,10 @@ import { join } from 'path'
 
 import { ReadmeValidator } from '../src/readme-validator'
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock('fs', () => ({
-	...jest.requireActual('fs') as object,
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-explicit-any
+	...(jest.requireActual('fs') as any),
 
 	existsSync: jest.fn(),
 
@@ -45,6 +47,7 @@ beforeEach(() => {
 		if (typeof options === 'string') {
 			encoding = options
 		} else if (options && typeof options === 'object') {
+			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 			encoding = options.encoding || null
 		}
 
@@ -57,9 +60,11 @@ beforeEach(() => {
 		}
 	}) as typeof readFileSync)
 
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	mockWriteFileSync.mockImplementation(() => {})
 })
 
+// eslint-disable-next-line max-lines-per-function
 describe('ReadmeValidator', () => {
 	it('should throw an error if README.md does not exist', () => {
 		mockExistsSync.mockImplementation((filePath) => filePath === packageJsonPath)
@@ -171,6 +176,7 @@ describe('ReadmeValidator', () => {
 			if (typeof options === 'string') {
 				encoding = options
 			} else if (options && typeof options === 'object') {
+				// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 				encoding = options.encoding || null
 			}
 
@@ -202,6 +208,7 @@ describe('ReadmeValidator', () => {
 			if (typeof options === 'string') {
 				encoding = options
 			} else if (options && typeof options === 'object') {
+				// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 				encoding = options.encoding || null
 			}
 
