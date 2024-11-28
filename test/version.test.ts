@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals'
 import { log } from '@krauters/logger'
-
 import { execSync } from 'child_process'
 
 import { PackageJson } from '../src/package-json'
@@ -12,6 +11,7 @@ jest.mock('../src/package-json')
 const mockedExecSync = execSync as jest.MockedFunction<typeof execSync>
 const mockedFindPackageJson = PackageJson.getPackageJson as jest.MockedFunction<typeof PackageJson.getPackageJson>
 
+// eslint-disable-next-line max-lines-per-function
 describe('Version', () => {
 	beforeEach(() => {
 		jest.resetAllMocks()
@@ -104,6 +104,7 @@ describe('Version', () => {
 
 	describe('compareVersions', () => {
 		it('should log version change if versions are different', () => {
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			const consoleLogSpy = jest.spyOn(log, 'info').mockImplementation(() => {})
 			jest.spyOn(Version, 'getBranchVersion').mockReturnValue('1.0.1')
 			jest.spyOn(Version, 'getLocalVersion').mockReturnValue('1.1.0')
@@ -140,6 +141,7 @@ describe('Version', () => {
 		})
 
 		it('should warn if versions are the same and allowMatchWithoutError is true', () => {
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			const consoleWarnSpy = jest.spyOn(log, 'warn').mockImplementation(() => {})
 			jest.spyOn(Version, 'getBranchVersion').mockReturnValue('1.0.1')
 			jest.spyOn(Version, 'getLocalVersion').mockReturnValue('1.0.1')
