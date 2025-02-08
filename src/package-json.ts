@@ -4,12 +4,20 @@ import { PackageJson as PackageJsonType } from '@krauters/structures'
 import { existsSync, readFileSync } from 'fs'
 import { dirname, join } from 'path'
 
+interface LoadPackageJsonOptions {
+	// eslint-disable-next-line @stylistic/ts/lines-around-comment
+	/**
+	 * When set to `true`, the method will return `undefined` rather than
+	 * throwing an error if reading or parsing `package.json` fails.
+	 */
+	returnUndefinedOnError?: boolean
+}
+
 interface PackageJsonOptions {
 	maxDepth?: number
 	scopeRegex?: RegExp
 	startDir?: string
 }
-
 @debuggable(log)
 export class PackageJson {
 	/**
@@ -47,7 +55,8 @@ export class PackageJson {
 			const packageJsonPath = join(currentDir, 'package.json')
 
 			if (existsSync(packageJsonPath)) {
-				return PackageJson.loadPackageJson(packageJsonPath)
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				return PackageJson.loadPackageJson(packageJsonPath)!
 			}
 
 			const parentDir = dirname(currentDir)
@@ -68,22 +77,32 @@ export class PackageJson {
 	 * Reads and parses the package.json file.
 	 *
 	 * @param packageJsonPath - The path to the package.json file.
-	 * @returns The parsed PackageJson object.
-	 * @throws Will throw an error if the file cannot be read or parsed.
+	 * @param options - The options object controlling method behavior.
+	 * @returns The parsed `PackageJson` object, or `undefined` if `options.returnUndefinedOnError` is `true`
+	 *          and an error occurs.
+	 * @throws Will throw an error if `options.returnUndefinedOnError` is `false` (default) and the file
+	 *         cannot be read or parsed.
 	 */
-	static loadPackageJson(packageJsonPath: string): PackageJsonType {
+	static loadPackageJson(packageJsonPath: string, options: LoadPackageJsonOptions = {}): PackageJsonType | undefined {
+		// Destructure the options and set a default value for `returnUndefinedOnError`
+		const { returnUndefinedOnError = false } = options
+
 		try {
-			const packageJsonContent: string = readFileSync(packageJsonPath, 'utf8')
+			const packageJsonContent = readFileSync(packageJsonPath, 'utf8')
 			const packageJson: PackageJsonType = JSON.parse(packageJsonContent)
 			log.info(`Extracted package name [${packageJson.name}]`)
 
 			return packageJson
 		} catch (error: unknown) {
-			if (error instanceof Error) {
-				throw new Error(`Failed to read package.json at [${packageJsonPath}] with error [${error.message}]`)
-			} else {
-				throw new Error(`Failed to read package.json at [${packageJsonPath}] with unknown error.`)
+			if (returnUndefinedOnError) {
+				log.warn(
+					`Failed to read package.json at [${packageJsonPath}] with error [${String(error)}], returning undefined.`,
+				)
+
+				return undefined
 			}
+
+			throw new Error(`Failed to read package.json at [${packageJsonPath}] with an unknown error.`)
 		}
 	}
 }

@@ -105,7 +105,7 @@ describe('Version', () => {
 	describe('compareVersions', () => {
 		it('should log version change if versions are different', () => {
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			const consoleLogSpy = jest.spyOn(log, 'info').mockImplementation(() => {})
+			const consoleLogSpy = jest.spyOn(log, 'info').mockImplementation(() => '')
 			jest.spyOn(Version, 'getBranchVersion').mockReturnValue('1.0.1')
 			jest.spyOn(Version, 'getLocalVersion').mockReturnValue('1.1.0')
 			jest.spyOn(Version, 'getCurrentBranch').mockReturnValue('main')

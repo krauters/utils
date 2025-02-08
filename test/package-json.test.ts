@@ -14,10 +14,11 @@ describe('PackageJson', () => {
 		version: '1.0.0',
 	})
 
+	// Missing closing brace -> invalid JSON
 	const invalidPackageJsonContent = `{
-		"name": "test-package",
-		"version": "1.0.0",
-		"description": "A test package.json file",`
+    "name": "test-package",
+    "version": "1.0.0",
+    "description": "A test package.json file",`
 
 	beforeAll(() => {
 		if (!existsSync(testDir)) {
@@ -33,7 +34,8 @@ describe('PackageJson', () => {
 		it('should read and parse a valid package.json file', () => {
 			writeFileSync(packageJsonPath, validPackageJsonContent, 'utf8')
 
-			const packageJson = PackageJson.loadPackageJson(packageJsonPath)
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			const packageJson = PackageJson.loadPackageJson(packageJsonPath)!
 
 			expect(packageJson.name).toBe('test-package')
 			expect(packageJson.version).toBe('1.0.0')
@@ -47,6 +49,26 @@ describe('PackageJson', () => {
 				PackageJson.loadPackageJson(packageJsonPath)
 			}).toThrow(/Failed to read package.json/)
 		})
+
+		it('should return undefined when reading an invalid package.json file if returnUndefinedOnError is true', () => {
+			writeFileSync(packageJsonPath, invalidPackageJsonContent, 'utf8')
+
+			const result = PackageJson.loadPackageJson(packageJsonPath, {
+				returnUndefinedOnError: true,
+			})
+
+			expect(result).toBeUndefined()
+		})
+
+		it('should return undefined if package.json does not exist and returnUndefinedOnError is true', () => {
+			rmSync(packageJsonPath, { force: true })
+
+			const result = PackageJson.loadPackageJson(packageJsonPath, {
+				returnUndefinedOnError: true,
+			})
+
+			expect(result).toBeUndefined()
+		})
 	})
 
 	describe('getPackageJson', () => {
@@ -54,7 +76,6 @@ describe('PackageJson', () => {
 			writeFileSync(packageJsonPath, validPackageJsonContent, 'utf8')
 
 			const packageJson = PackageJson.getPackageJson({ startDir: testDir })
-
 			expect(packageJson.name).toBe('test-package')
 		})
 
@@ -62,13 +83,13 @@ describe('PackageJson', () => {
 			const nestedDir = join(testDir, 'nested')
 			mkdirSync(nestedDir)
 
+			writeFileSync(packageJsonPath, validPackageJsonContent, 'utf8')
 			const packageJson = PackageJson.getPackageJson({ startDir: nestedDir })
-
 			expect(packageJson.name).toBe('test-package')
 		})
 
 		it('should throw an error if package.json is not found', () => {
-			rmSync(packageJsonPath)
+			rmSync(packageJsonPath, { force: true })
 
 			expect(() => {
 				PackageJson.getPackageJson({ startDir: '/test-root-dir' })
@@ -82,7 +103,6 @@ describe('PackageJson', () => {
 			const regex = /^@.*\//
 
 			const title = PackageJson.formatPackageName(packageName, { scopeRegex: regex })
-
 			expect(title).toBe('Test Package Name')
 		})
 
@@ -91,7 +111,6 @@ describe('PackageJson', () => {
 			const regex = /^@.*\//
 
 			const title = PackageJson.formatPackageName(packageName, { scopeRegex: regex })
-
 			expect(title).toBe('Test Package Name')
 		})
 	})
